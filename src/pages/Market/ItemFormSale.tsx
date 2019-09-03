@@ -22,7 +22,8 @@ const ItemFormSale = (props: IItemForSaleProps) => {
   const price = Math.ceil(Math.random() * 2000);
   return (
     <Card
-      image={image}
+      style={{ width: '100%' }}
+      image={`${image}?sig=${(Math.random() * 100).toFixed(3)}`}
       header={name}
       // meta="Friend"
       description={priceFormatter(price)}

@@ -24,6 +24,7 @@ const Login = (props: RouteComponentProps) => {
   return (
     <div>
       <Container>
+        <h1>Log in</h1>
         <Form onSubmit={handleSubmit} size="small">
           <Input onChange={onChangeEmail} value={email} control="input" label="Email" />
           <Input onChange={onChangePassword} value={password} type="password" control="input" label="Password" />

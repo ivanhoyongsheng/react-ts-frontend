@@ -7,7 +7,6 @@ const Button = Form.Button;
 
 const Logout = (props: RouteComponentProps) => {
   useEffect(() => {
-    console.log('logout');
     window.localStorage.setItem('user', 'false');
     props.history.push('/login');
   });

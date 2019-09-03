@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemFormSale from './ItemFormSale';
 import fakeItems from '../../fakedata/fakeitems.json';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Container, Loader } from 'semantic-ui-react';
 import { IItemForSale, getItemsForSale } from '../../service/marketitems';
 
 const { Column } = Grid;
@@ -37,16 +37,21 @@ class Market extends React.Component<IMarketProps, IMarketState> {
   }
 
   render() {
+    const { loading } = this.state;
+
     return (
       <div>
-        Market Place (once user is "logged in") a. As a user, I want to see a list/grid of items currently for sale
-        <br />
-        <Grid container columns={6}>
-          {fakeItems.map((item, i: React.ReactText) => (
-            <Column key={i}>
-              <ItemFormSale item={item} />
-            </Column>
-          ))}
+        <Grid container>
+          <Column mobile={16}>
+            <h1>Market Place</h1>
+          </Column>
+          <Loader active={loading} />
+          {loading === false &&
+            fakeItems.map((item, i: React.ReactText) => (
+              <Column mobile={8} tablet={5} computer={3} key={i}>
+                <ItemFormSale item={item} />
+              </Column>
+            ))}
         </Grid>
       </div>
     );

@@ -2,7 +2,8 @@ import React from 'react';
 import { getAccountData, IAccountData } from '../../service/account';
 import moment from 'moment';
 import { MOMENT_FORMAT_DATE } from '../../util/misc';
-import { Container } from 'semantic-ui-react';
+import { Container, Item, Button, Icon, Loader, Responsive, Grid } from 'semantic-ui-react';
+import ChangePasswordModal from './ChangePasswordModal';
 
 interface IParsedAccountData extends IAccountData {
   age: string;
@@ -13,12 +14,14 @@ interface IAccountProps {}
 interface IAccountState {
   loading: boolean;
   data: IParsedAccountData;
+  modalOpen: boolean;
 }
 
 class Account extends React.PureComponent<IAccountProps, IAccountState> {
   constructor(props: IAccountProps) {
     super(props);
     this.state = {
+      modalOpen: false,
       loading: false,
       data: null
     };
@@ -48,34 +51,55 @@ class Account extends React.PureComponent<IAccountProps, IAccountState> {
     this.getData();
   }
 
+  togglePasswordModal = (_e?: React.MouseEvent<HTMLButtonElement>) => {
+    this.setState({ modalOpen: !this.state.modalOpen });
+  };
+
   render() {
-    const { data, loading } = this.state;
+    const { data, loading, modalOpen } = this.state;
+    const btn = (
+      <Button size="mini" primary onClick={this.togglePasswordModal} floated="right">
+        Change Password
+      </Button>
+    );
     return (
-      <div>
-        {loading === false && data !== null && (
+      <>
+        {loading === false && data !== null ? (
           <Container>
-            <p>
-              3. Accountsdf
-              <br />
-              a. As a user, I want to see my information
-              <br />
-              i. {data && data.name}
-              <br />
-              ii. {data && moment(data.birthday).format(MOMENT_FORMAT_DATE)}
-              <br />
-              iii. {data && data.age}
-              <br />
-              iv. {data && data.education}
-              <br />
-              v. {data && data.about}
-              <br />
-              b. As a user, I want to change my password
-              <br />
-              i. Modal or separate screen to "change" password
-            </p>
+            <h1>My Account</h1>
+            <Item.Group>
+              <Item>
+                <Item.Image size="small" src="https://source.unsplash.com/random/150x150" />
+
+                <Item.Content>
+                  <Item.Header as="a">{data && data.name}</Item.Header>
+                  <Responsive minWidth={568}>{btn}</Responsive>
+                  <Item.Meta>
+                    <Icon name="birthday" />
+                    {data && moment(data.birthday).format(MOMENT_FORMAT_DATE)} ({data && data.age} years old)
+                  </Item.Meta>
+                  <Item.Extra>{data && data.education}</Item.Extra>
+                  <Responsive maxWidth={567}>
+                    <Button
+                      style={{ width: '100%' }}
+                      size="mini"
+                      primary
+                      onClick={this.togglePasswordModal}
+                      floated="right"
+                    >
+                      Change Password
+                    </Button>
+                  </Responsive>
+                  <Item.Description>{data && data.about}</Item.Description>
+                </Item.Content>
+              </Item>
+            </Item.Group>
           </Container>
+        ) : (
+          <Loader active={loading} />
         )}
-      </div>
+        <ChangePasswordModal toggleModal={this.togglePasswordModal} open={modalOpen} />
+      </>
     );
   }
 }
