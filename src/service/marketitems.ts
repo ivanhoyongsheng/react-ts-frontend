@@ -6,6 +6,7 @@ export interface IItemForSale {
   quantity: number;
   image: string;
 }
+
 export const getItemsForSale = async (): Promise<IItemForSale[]> => {
   // placeholder service, replace with API call if needed
   await new Promise((resolve) => setTimeout(resolve, 1000));

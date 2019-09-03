@@ -9,7 +9,6 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Menu from './Menu';
 
-// interface IAppProps extends RouteComponentProps {}
 const App: React.FC = () => {
   return (
     <BrowserRouter>

@@ -27,6 +27,7 @@ const ChangePasswordModal = (props: IChangePasswordModalProps) => {
   }, []);
 
   const errorNotMatch = password.length > 0 && confirmPassword.length > 0 && password !== confirmPassword;
+
   const errorEmpty =
     !(password.length === 0 && confirmPassword.length === 0) && (password.length === 0 || confirmPassword.length === 0);
 
@@ -60,6 +61,7 @@ const ChangePasswordModal = (props: IChangePasswordModalProps) => {
   } else if (errorEmpty) {
     error = 'Please fill in both fields.';
   }
+
   return (
     <Modal closeIcon onClose={changed ? (_e) => handleSubmit(null) : toggleModal} open={open}>
       <Modal.Header>Change Password</Modal.Header>
@@ -92,6 +94,7 @@ const ChangePasswordModal = (props: IChangePasswordModalProps) => {
 interface IPasswordChangedContentProps {
   handleSubmit: (e: any) => void;
 }
+
 const PasswordChangedContent: React.FC<IPasswordChangedContentProps> = (props: IPasswordChangedContentProps) => {
   return (
     <div style={{ minHeight: '80px' }}>

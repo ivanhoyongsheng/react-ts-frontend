@@ -22,6 +22,7 @@ export interface IChangeAccountPasswordParams {
   password: string;
   confirmPassword: string;
 }
+
 export const changeAccountPassword = async (params: IChangeAccountPasswordParams): Promise<IResponse> => {
   // placeholder service, replace with API call if needed
   await new Promise((resolve) => setTimeout(resolve, 1000));

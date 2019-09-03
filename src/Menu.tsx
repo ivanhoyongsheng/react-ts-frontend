@@ -42,6 +42,7 @@ const MenuComponent: React.FC<IMenuProps> = ({ location: { pathname } }) => {
   const onClickMenu = useCallback(() => {
     setMenuOpen(!menuOpen);
   }, [menuOpen]);
+
   const menuTogglerContainer = (
     <div className="menu-toggler-container">
       <ToggleMenuButton onClickMenu={onClickMenu} />
@@ -69,6 +70,7 @@ const MenuComponent: React.FC<IMenuProps> = ({ location: { pathname } }) => {
   ) : (
     menuTogglerContainer
   );
+
   return (
     <>
       <Responsive
