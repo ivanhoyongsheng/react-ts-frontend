@@ -3,9 +3,10 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
-import Market from './pages/Market';
-import Account from './pages/Account';
+import Routes from './Routes';
+
 import Login from './pages/Login';
+import Logout from './pages/Logout';
 import Menu from './Menu';
 
 // interface IAppProps extends RouteComponentProps {}
@@ -14,10 +15,15 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Menu />
       <Switch>
-        <Route path="/market" component={Market} />
-        <Route path="/account" component={Account} />
-        <Redirect to="/" />
-        <Route path="/" component={Login} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/login" component={Login} />
+        <Route
+          path="/"
+          render={() => {
+            const hasUser = window.localStorage.getItem('user') === 'true';
+            return hasUser ? <Routes /> : <Redirect to="/login" />;
+          }}
+        ></Route>
       </Switch>
     </BrowserRouter>
   );

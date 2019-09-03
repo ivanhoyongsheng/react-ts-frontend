@@ -1,12 +1,24 @@
 import React from 'react';
-import { Menu, MenuItemProps } from 'semantic-ui-react';
+import { Menu, MenuItemProps, Responsive } from 'semantic-ui-react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Location } from 'history';
+
+const REDIRECT_PATH = '/market';
 
 const items: MenuItemProps[] = [
   { key: 'account', active: true, name: 'My Account' },
   { key: 'market', name: 'Marketplace' },
-  { key: 'events', name: 'Upcoming Events' }
+  { key: '', name: 'Contact Us' },
+  { key: '', name: 'Locations' },
+  { key: '', name: 'Settings' },
+  { key: '', name: 'Data' },
+  {
+    key: 'logout',
+    name: 'Log Out',
+    hide: () => {
+      return window.localStorage.getItem('user') !== 'true';
+    }
+  }
 ];
 
 const Item = Menu.Item;
@@ -15,18 +27,20 @@ interface IMenuProps extends RouteComponentProps {
   location: Location;
 }
 const MenuComponent: React.FC<IMenuProps> = ({ location: { pathname } }) => {
-  return (
-    <Menu>
+  const menu = (
+    <>
       {items.map((item, i) => {
         const path = `/${item.key}`;
-        return (
-          <NavLink key={i} to={path}>
+        return item.hide && item.hide() === true ? null : (
+          <NavLink key={i} to={item.key === undefined || item.key === null || item.key === '' ? REDIRECT_PATH : path}>
             <Item active={pathname === path}>{item.name}</Item>
           </NavLink>
         );
       })}
-    </Menu>
+    </>
   );
+  const ResponsiveContainer = <Responsive as={() => <Menu stackable>{menu}</Menu>}></Responsive>;
+  return ResponsiveContainer;
 };
 
 export default withRouter(MenuComponent);
